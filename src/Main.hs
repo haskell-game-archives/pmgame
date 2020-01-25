@@ -41,6 +41,7 @@ import Model.Types                      ( AsciiMaze (..)
                                         , Options   (..)
                                         , Time      (..)
                                         , TimeEvent (..)        )
+import Graphics.Vty
 
 ---------------------------------------------------------------------
 -- Entry point and Brick App definition
@@ -87,8 +88,9 @@ runGame :: GameSt -> IO GameSt
 runGame newGame = do
     chan <- newBChan 10 :: IO ( BChan TimeEvent )
     defaultConfig <- V.standardIOConfig
+    vty <- mkVty defaultConfig
     forkIO $ runTimer chan 0
-    customMain (V.mkVty defaultConfig) (Just chan) app newGame
+    customMain vty (V.mkVty defaultConfig) (Just chan) app newGame
 
 ---------------------------------------------------------------------
 -- Shutting down the game
