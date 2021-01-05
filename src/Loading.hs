@@ -19,6 +19,7 @@ import Data.List
     sortOn,
   )
 import Data.Matrix ((!))
+import Data.Ord
 import qualified Data.Matrix as M
 import Lens.Micro ((&), (.~), (^.))
 import Model.Types
@@ -105,7 +106,7 @@ startNewGame r0 scores level asciiMaze = do
         _dtime = 0,
         _pwrtime = powerDuration level,
         _msg = newMessage "Ready!",
-        _highscores = sortOn (Data.Ord.Down . snd) scores,
+        _highscores = sortOn (Down . snd) scores,
         _hsedit = editor HighScoreEdit (Just 1) ""
       }
 
