@@ -20,7 +20,7 @@ import Data.List
   )
 import Data.Matrix ((!))
 import qualified Data.Matrix as M
-import Data.Ordfdrdfs
+import Data.Ord
 import Lens.Micro ((&), (.~), (^.))
 import Model.Types
   ( AsciiMaze,
