@@ -1,44 +1,59 @@
-name:                pmgame
-version:             1.1.0
--- synopsis:
--- description:
-homepage:            https://github.com/MWRuszczycky/pmgame#readme
-license:             BSD3
-license-file:        LICENSE
-author:              Mark W. Ruszczycky
-maintainer:          mwruszczycky@gmail.com
-copyright:           2018 Mark W. Ruszczycky
-category:            Game
-build-type:          Simple
-cabal-version:       >=1.10
-extra-source-files:  README.md
+cabal-version:      2.4
+name:               pmgame
+version:            1.1.0
+homepage:           https://github.com/MWRuszczycky/pmgame#readme
+license:            BSD-3-Clause
+license-file:       LICENSE
+author:             Mark W. Ruszczycky
+maintainer:         mwruszczycky@gmail.com
+copyright:          2018 Mark W. Ruszczycky
+category:           Game
+build-type:         Simple
+tested-with:        GHC ==8.6.5 || ==8.8.4 || ==8.10.3
+extra-source-files: README.md
+
+common common
+  build-depends:
+    , base       >=4.12 && <4.15
+    , brick      >=0.47 && <0.59
+    , microlens  ^>=0.4
+    , random     >=1.1  && <1.3
+    , vty        >=5.25 && <5.33
+
+  ghc-options:      -Wall
+  default-language: Haskell2010
+
+library
+  import:          common
+  hs-source-dirs:  src
+  build-depends:
+    , matrix        ^>=0.3
+    , microlens-th  ^>=0.4
+    , text          ^>=1.2
+    , vector        ^>=0.12
+
+  -- cabal-fmt: expand src
+  exposed-modules:
+    Controller
+    Loading
+    Model.Model
+    Model.Types
+    Model.Utilities
+    Resources
+    View.Core
+    View.DialogUIs
+    View.MazeUIs
+    View.Tiles
+    View.View
+
+  other-modules:   Paths_pmgame
 
 executable pmgame
-  hs-source-dirs:      src
-  main-is:             Main.hs
-  default-language:    Haskell2010
-  ghc-options:         -O2 -threaded
-  build-depends:       base >= 4.7 && < 5
-                     , brick
-                     , directory
-                     , matrix
-                     , microlens
-                     , microlens-th
-                     , random
-                     , text
-                     , unix
-                     , vector
-                     , vty
- other-modules:        Controller
-                     , Loading
-                     , Model.Model
-                     , Model.Types
-                     , Model.Utilities
-                     , Paths_pmgame
-                     , Resources
-                     , View.Core
-                     , View.DialogUIs
-                     , View.MazeUIs
-                     , View.Tiles
-                     , View.View
+  import:        common
+  main-is:       app/Main.hs
+  build-depends:
+    , directory  ^>=1.3
+    , pmgame
+    , unix       ^>=2.7
 
+  ghc-options:   -O2

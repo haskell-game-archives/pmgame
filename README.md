@@ -1,5 +1,10 @@
 # pmgame
 
+[![cabal](https://github.com/haskell-game-archives/pmgame/workflows/cabal/badge.svg)](https://github.com/haskell-game-archives/pmgame/actions?query=workflow%3Acabal)
+[![stack](https://github.com/haskell-game-archives/pmgame/workflows/stack/badge.svg)](https://github.com/haskell-game-archives/pmgame/actions?query=workflow%3Astack)
+[![lint](https://github.com/haskell-game-archives/pmgame/workflows/lint/badge.svg)](https://github.com/haskell-game-archives/pmgame/actions?query=workflow%3Alint)
+[![format](https://github.com/haskell-game-archives/pmgame/workflows/format/badge.svg)](https://github.com/haskell-game-archives/pmgame/actions?query=workflow%3Aformat)
+
 Terminal-based game for Linux similar to Pac-Man and written entirely in Haskell using [Brick](https://hackage.haskell.org/package/brick). The game should also work in terminal emulators on the MacOS, but may not work on Windows (I have only tested it on Linux).
 
 ![pmgame demo](demos/demo1.gif)
