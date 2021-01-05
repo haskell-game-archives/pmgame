@@ -19,8 +19,8 @@ import Data.List
     sortOn,
   )
 import Data.Matrix ((!))
-import Data.Ord
 import qualified Data.Matrix as M
+import Data.Ordfdrdfs
 import Lens.Micro ((&), (.~), (^.))
 import Model.Types
   ( AsciiMaze,

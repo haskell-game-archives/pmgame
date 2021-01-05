@@ -54,8 +54,8 @@ import Data.List
     maximumBy,
   )
 import Data.Matrix ((!))
-import Data.Maybe
 import qualified Data.Matrix as M
+import Data.Maybe
 import Data.Ord (comparing)
 import qualified Data.Vector as V
 import Lens.Micro ((%~), (&), (^.))
