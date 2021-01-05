@@ -28,11 +28,6 @@ jobs:
       with:
         path: ~/.cabal/store
         key: ${{ runner.os }}-${{ matrix.ghc }}-${{ matrix.cache-version }}-cabal
-        
-    - name: Install libralies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libsdl2-dev libsdl2-ttf-dev libsdl2-gfx-dev
 
     - name: Install dependencies
       run: |
