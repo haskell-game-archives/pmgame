@@ -214,4 +214,4 @@ renderFruitItems :: Game -> Widget Name
 -- ^ Graphical summary of the different types of fruit eaten so far.
 renderFruitItems gm = hBox . map (renderTile gm . FruitTile) $ names
   where
-    names = fst . unzip $ gm ^. T.items . T.fruits
+    names = map fst $ gm ^. T.items . T.fruits

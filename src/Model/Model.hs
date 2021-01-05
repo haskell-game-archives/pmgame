@@ -114,7 +114,7 @@ updateGame gm0 gm1
 -- Unexported
 
 runUpdate :: Game -> Game -> Game
-runUpdate gm0 gm1 = updatePower . updateFruit . updateCaptures gm0 $ gm1
+runUpdate gm0 = updatePower . updateFruit . updateCaptures gm0
 
 ---------------------------------------------------------------------
 -- Time management

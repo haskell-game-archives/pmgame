@@ -96,7 +96,7 @@ makeLenses ''Options
 
 type Time = Int
 
-data TimeEvent = Tick Time deriving (Show)
+newtype TimeEvent = Tick Time deriving (Show)
 
 ---------------------------------------------------------------------
 -- Positioning and movement of movable characters

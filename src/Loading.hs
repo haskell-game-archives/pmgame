@@ -105,7 +105,7 @@ startNewGame r0 scores level asciiMaze = do
         _dtime = 0,
         _pwrtime = powerDuration level,
         _msg = newMessage "Ready!",
-        _highscores = reverse . sortOn snd $ scores,
+        _highscores = sortOn (Data.Ord.Down . snd) scores,
         _hsedit = editor HighScoreEdit (Just 1) ""
       }
 
@@ -164,7 +164,7 @@ getDims :: IndexedMaze -> (Int, Int)
 -- ^ Rows and columns of the maze that an IndexedMaze represents.
 getDims xs = (maximum rs, maximum cs)
   where
-    (rs, cs) = unzip . fst . unzip $ xs
+    (rs, cs) = unzip . map fst $ xs
 
 countPellets :: IndexedMaze -> Either String Int
 -- ^ Get number of pellets and power pellets from an IndexedMaze.
@@ -173,7 +173,7 @@ countPellets m
   | otherwise = Left "There are no pellets in the maze!"
   where
     isPellet x = x == '.' || x == '*'
-    n = length . filter isPellet . snd . unzip $ m
+    n = length . filter isPellet . map snd $ m
 
 readPosition :: IndexedMaze -> Char -> Either String Point
 -- ^ Read the row and column of the first instance of a character from
@@ -353,7 +353,7 @@ resolveWarp xs (r, c)
     (nr, nc) = getDims xs
     wLoc = case filter (\(p, x) -> x == 'w' && p /= (r, c)) xs of
       [] -> Left "Cannot find matching warp tile!"
-      w : [] -> Right . fst $ w
+      [w] -> Right . fst $ w
       _otherwise -> Left "Too many warp tiles!"
 
 isWallChar :: Char -> Bool
@@ -416,6 +416,6 @@ getOptions args =
           }
    in case O.getOpt O.Permute optionsHub args of
         (xs, _, []) ->
-          let opts = foldl' (flip ($)) defaults $ xs
+          let opts = foldl' (flip ($)) defaults xs
            in maybe (Right opts) Left $ opts ^. T.info
         (_, _, es) -> Left . concat $ es

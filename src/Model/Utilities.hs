@@ -54,6 +54,7 @@ import Data.List
     maximumBy,
   )
 import Data.Matrix ((!))
+import Data.Maybe
 import qualified Data.Matrix as M
 import Data.Ord (comparing)
 import qualified Data.Vector as V
@@ -146,7 +147,7 @@ readHighScores :: Either String String -> [HighScore]
 --  strings terminated by a newline. The first string is the player
 --  name and the second is the score.
 readHighScores (Left _) = []
-readHighScores (Right xs) = maybe [] id . mapM parseLine . lines $ xs
+readHighScores (Right xs) = fromMaybe [] . mapM parseLine . lines $ xs
   where
     parseLine = go . break (== '\t')
     go (n, s)
@@ -228,7 +229,7 @@ isNewHighScore :: Game -> Bool
 isNewHighScore gm = length scores < 5 || score > minimum scores
   where
     score = playerScore gm
-    scores = snd . unzip $ gm ^. T.highscores
+    scores = map snd $ gm ^. T.highscores
 
 playerScore :: Game -> Score
 -- ^ Compute the current score based on the game state.
@@ -356,12 +357,12 @@ randomizeBiasHead r0 xs bias = (x : xs', r2)
 pathBetween :: Maze -> Point -> Point -> [Point]
 -- ^ Find a path between two points in the maze that are connected. If
 --  the points are not connected, return an empty path.
-pathBetween m p0 p1 = maybe [] id $ findPathBetween m p0 p1
+pathBetween m p0 p1 = fromMaybe [] $ findPathBetween m p0 p1
 
 isPathBetween :: Maze -> Point -> Point -> Bool
 -- ^ Determine if there is a path from p0 to p1. If either is a wall,
 --  then there is no path.
-isPathBetween m p0 p1 = maybe False (const True) $ findPathBetween m p0 p1
+isPathBetween m p0 p1 = isJust $ findPathBetween m p0 p1
 
 -- Unexported
 
@@ -389,7 +390,7 @@ getPaths :: Maze -> Point -> [Point] -> [Point] -> Maybe [Point]
 getPaths _ _ _ [] = Nothing
 getPaths m p ys (x : xs)
   | p == x = Just $ ys ++ [x]
-  | elem p nxt = Just $ ys' ++ [p]
+  | p `elem` nxt = Just $ ys' ++ [p]
   | otherwise = getPaths m p ys' (xs ++ nxt)
   where
     ys' = ys ++ [x]

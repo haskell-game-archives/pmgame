@@ -10,6 +10,7 @@ module Resources
 where
 
 import Data.List (intercalate)
+import Data.Maybe
 import Data.Version (showVersion)
 import Lens.Micro (set)
 import Model.Types
@@ -85,7 +86,7 @@ optionsHub =
 readFirstLevel :: String -> Int
 -- ^ Read a string as level value, and if not possible, then just
 --  default to level 1.
-readFirstLevel = maybe 1 id . readMaybe
+readFirstLevel = fromMaybe 1 . readMaybe
 
 helpUsage :: String
 helpUsage = "Show this help display."
@@ -126,7 +127,7 @@ getAsciiMaze :: Int -> AsciiMaze
 getAsciiMaze lvl
   | lvl < 1 = getAsciiMaze 1
   | isFlipped = intercalate "\n" . flipMaze $ maze
-  | otherwise = intercalate "\n" $ maze
+  | otherwise = intercalate "\n" maze
   where
     isFlipped = odd . quot (lvl - 1) $ 10
     maze = rawMaze . mazeNumber $ lvl
